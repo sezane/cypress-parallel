@@ -71,6 +71,10 @@ const logger = function(c) {
   };
 };
 
+const getRandomInt = function (max) {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
 const formatTime = function(timeMs) {
   const seconds = Math.ceil(timeMs / 1000);
   const sec = seconds % 60;
@@ -93,7 +97,7 @@ const start = () => {
 
   let map = new Map();
   for (let f of fileList) {
-    let specWeight = DAFAULT_WEIGHT;
+    let specWeight = getRandomInt(3);
     Object.keys(specWeights).forEach(spec => {
       if (f.endsWith(spec)) {
         specWeight = specWeights[spec].weight;
