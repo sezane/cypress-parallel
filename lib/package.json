@@ -5,7 +5,7 @@
   "main": "cli.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tnicola/cypress-parallel.git"
+    "url": "git+https://github.com/sezane/cypress-parallel.git"
   },
   "keywords": [
     "cypress",
@@ -16,9 +16,9 @@
   "author": "Nicola Tommasi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tnicola/cypress-parallel/issues"
+    "url": "https://github.com/sezane/cypress-parallel/issues"
   },
-  "homepage": "https://github.com/tnicola/cypress-parallel#readme",
+  "homepage": "https://github.com/sezane/cypress-parallel#readme",
   "bin": {
     "cypress-parallel": "./cli.js"
   },
