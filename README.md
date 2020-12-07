@@ -1,7 +1,7 @@
 [![npm version](https://badge.fury.io/js/cypress-parallel.svg)](https://badge.fury.io/js/cypress-parallel)
 # cypress-parallel
 Reduce up to 40% your Cypress suite execution time parallelizing the test run on the same machine.
- 
+
 # Run your Cypress test in parallel (locally)
 
 ## How it works
@@ -18,7 +18,7 @@ Reduce up to 40% your Cypress suite execution time parallelizing the test run on
  npm i cypress-parallel
  ```
 
- or 
+ or
 
 ```
 yarn add cypress-parallel
@@ -60,6 +60,7 @@ npm run cy:parallel
 | --args     | -a    | Your npm Cypress command arguments | string |
 | --threads  | -t    | Number of threads                  | number |
 | --specsDir | -d    | Cypress specs directory.           | string |
+| --write_weights_file   | -wwf    | if a weights file should be crated; default false           | boolean |
 
 # Contributors
 Looking for contributors.
