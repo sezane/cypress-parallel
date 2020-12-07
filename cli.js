@@ -218,14 +218,6 @@ const start = () => {
       totalPending += totalPending;
       specWeights[name] = { time: test.duration, weight: 0 };
       table.push([name, `${formatTime(test.duration)}`, test.tests, test.passes, test.failures, test.pending]);
-      table.push([
-        name,
-        `${formatTime(test.duration)}`,
-        test.tests,
-        test.passes,
-        test.failures,
-        test.pending
-      ]);
     }
     table.push("Results", `${formatTime(totalDuration)}`, totalTests, totalPasses, totalTests-totalPasses, totalPending);
     console.log(table.toString());
