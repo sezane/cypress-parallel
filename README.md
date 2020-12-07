@@ -52,8 +52,8 @@ npm run cy:parallel
 
 ### Scripts options
 
-| Option       | Alias | Description                        | Type   | Default |
-| ------------ | ----- | ---------------------------------- | ------ | ------ |
+| Option       | Alias | Description                        | Type   | Default             |
+| ------------ | ----- | ---------------------------------- | ------ | ------------------- |
 | --help       |       | Show help                          |        |                     |
 | --version    |       | Show version number                |        |                     |
 | --script     | -s    | Your npm Cypress command           | string |                     |
