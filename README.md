@@ -63,9 +63,9 @@ npm run cy:parallel
 | --threads    | -t    | Number of threads; must be even #  | number | 4                   |
 
 # Contributors
-  Original Author: https://github.com/tnicola
-  Total Test Time: https://github.com/stepn1k
-  Updates and cleanup: https://github.com/sezane
-  Few small tweaks: me @ https://github.com/finalcut
+ *  Original Author: https://github.com/tnicola
+ *  Total Test Time: https://github.com/stepn1k
+ *  Updates and cleanup: https://github.com/sezane
+ *  Few small tweaks: me @ https://github.com/finalcut
 # License
  MIT
