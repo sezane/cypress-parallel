@@ -63,6 +63,9 @@ npm run cy:parallel
 | --weightFile | -w    | if a weights file should be crated | bool   | false               |
 
 # Contributors
-Looking for contributors.
+  Original Author: https://github.com/tnicola
+  Total Test Time: https://github.com/stepn1k
+  Updates and cleanup: https://github.com/sezane
+  Few small tweaks: me @ https://github.com/finalcut
 # License
  MIT
