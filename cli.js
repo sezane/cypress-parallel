@@ -75,17 +75,22 @@ const getRandomInt = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-const formatTime = function(duration) {
-  var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+// function stolen from: https://stackoverflow.com/a/32180863/7329
+const formatTime = function(millisec) {
+  var seconds = (millisec / 1000).toFixed(1);
+  var minutes = (millisec / (1000 * 60)).toFixed(1);
+  var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+  var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
 
-  hours = (hours < 10) ? "0" + hours : hours;
-  minutes = (minutes < 10) ? "0" + minutes : minutes;
-  seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-  return hours + "h " + minutes + "m " + seconds + "s " + milliseconds + " ms";
+  if (seconds < 60) {
+      return seconds + " Sec";
+  } else if (minutes < 60) {
+      return minutes + " Min";
+  } else if (hours < 24) {
+      return hours + " Hrs";
+  } else {
+      return days + " Days"
+  }
 };
 
 const start = () => {
@@ -158,14 +163,14 @@ const start = () => {
         try {
           const test = JSON.parse(data);
           if (test[0] === 'pass') {
-            const testDuration = test[1].duration;
-            suiteDuration += testDuration;
+            suiteDuration = test[1].duration;
             console.log(
-              `\x1b[32m✔ \x1b[0m${test[1].title} (${testDuration}ms)`
+              `\x1b[32m✔ \x1b[0m${test[1].title} (${suiteDuration}ms)`
             );
           }
           if (test[0] === 'fail') {
-            console.log(`\x1b[31m✖ \x1b[0m${test[1].title} ( - ms)`);
+            suiteDuration = test[1].duration;
+            console.log(`\x1b[31m✖ \x1b[0m${test[1].title} (${suiteDuration}ms)`);
             console.log(`\x1b[31m${test[1].err}`);
             console.log(`\x1b[31m${test[1].stack}`);
           }
@@ -238,18 +243,17 @@ const start = () => {
       totalPending
     ]);
 
-
     console.log(table.toString());
 
-    Object.keys(specWeights).forEach(spec => {
+    if (WRITE_WEIGHTS_FILE) {
+      Object.keys(specWeights).forEach(spec => {
       specWeights[spec].weight = Math.floor(
         (specWeights[spec].time / totalDuration) * totalWeight
       );
-    });
+      });
 
-    const weightsJson = JSON.stringify(specWeights);
+      const weightsJson = JSON.stringify(specWeights);
 
-    if (WRITE_WEIGHTS_FILE) {
       fs.writeFile(`${WEIGHTS_JSON}`, weightsJson, 'utf8', err => {
         if (err) throw err;
         console.log('Generated file parallel-weights.json.');
