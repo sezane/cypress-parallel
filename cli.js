@@ -226,7 +226,16 @@ const start = () => {
         test.pending
       ]);
     }
-    table.push("Results", `${formatTime(totalDuration)}`, totalTests, totalPasses, totalTests-totalPasses, totalPending);
+
+    table.push([
+      'Results',
+      `${formatTime(totalDuration)}`,
+      totalTests,
+      totalPasses,
+      totalTests-totalPasses,
+      totalPending
+    ]);
+
 
     console.log(table.toString());
 
