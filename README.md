@@ -41,7 +41,7 @@ yarn add cypress-parallel
 Sample:
 
 ```
--a '\"--config baseUrl=http://localhost:3000\"'
+cypress-parallel -s cy:run -t 2 -d cypress -a '\"--config baseUrl=http://localhost:3000\"'
 ```
 
 ## Launch the new script
@@ -58,9 +58,9 @@ npm run cy:parallel
 | --version    |       | Show version number                |        |                     |
 | --script     | -s    | Your npm Cypress command           | string |                     |
 | --args       | -a    | Your npm Cypress command arguments | string |                     |
-| --threads    | -t    | Number of threads                  | number | 3                   |
 | --specsDir   | -d    | Cypress specs directory.           | string | cypress/integration |
 | --weightFile | -w    | if a weights file should be crated | bool   | false               |
+| --threads    | -t    | Number of threads; must be even #  | number | 4                   |
 
 # Contributors
   Original Author: https://github.com/tnicola
