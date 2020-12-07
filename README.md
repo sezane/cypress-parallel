@@ -52,15 +52,15 @@ npm run cy:parallel
 
 ### Scripts options
 
-| Option     | Alias | Description                        | Type   |
-| ---------- | ----- | ---------------------------------- | ------ |
-| --help     |       | Show help                          |        |
-| --version  |       | Show version number                |        |
-| --script   | -s    | Your npm Cypress command           | string |
-| --args     | -a    | Your npm Cypress command arguments | string |
-| --threads  | -t    | Number of threads                  | number |
-| --specsDir | -d    | Cypress specs directory.           | string |
-| --write_weights_file   | -wwf    | if a weights file should be crated; default false           | boolean |
+| Option       | Alias | Description                        | Type   | Default |
+| ------------ | ----- | ---------------------------------- | ------ | ------ |
+| --help       |       | Show help                          |        |                     |
+| --version    |       | Show version number                |        |                     |
+| --script     | -s    | Your npm Cypress command           | string |                     |
+| --args       | -a    | Your npm Cypress command arguments | string |                     |
+| --threads    | -t    | Number of threads                  | number | 3                   |
+| --specsDir   | -d    | Cypress specs directory.           | string | cypress/integration |
+| --weightFile | -w    | if a weights file should be crated | bool   | false               |
 
 # Contributors
 Looking for contributors.
