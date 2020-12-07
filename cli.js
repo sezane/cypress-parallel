@@ -203,7 +203,7 @@ const start = () => {
     let table = new Table({
       head: ['Spec', 'Time', 'Tests', 'Passing', 'Failing', 'Pending'],
       style: { head: ['green'] },
-      colWidths: [25, 8, 7, 9, 9, 9]
+      colWidths: [45, 25, 7, 9, 9, 9]
     });
 
     let totalTests = 0;
