@@ -1,7 +1,7 @@
 [![npm version](https://badge.fury.io/js/cypress-parallel.svg)](https://badge.fury.io/js/cypress-parallel)
 # cypress-parallel
 Reduce up to 40% your Cypress suite execution time parallelizing the test run on the same machine.
- 
+
 # Run your Cypress test in parallel (locally)
 
 ## How it works
@@ -15,13 +15,13 @@ Reduce up to 40% your Cypress suite execution time parallelizing the test run on
 
 ## Install
  ```
- npm i cypress-parallel
+ npm i sezane/cypress-parallel
  ```
 
- or 
+ or
 
 ```
-yarn add cypress-parallel
+yarn add sezane/cypress-parallel
  ```
 
 ## Add a new script
@@ -41,7 +41,7 @@ yarn add cypress-parallel
 Sample:
 
 ```
--a '\"--config baseUrl=http://localhost:3000\"'
+cypress-parallel -s cy:run -t 2 -d cypress -a '\"--config baseUrl=http://localhost:3000\"'
 ```
 
 ## Launch the new script
@@ -52,16 +52,20 @@ npm run cy:parallel
 
 ### Scripts options
 
-| Option     | Alias | Description                        | Type   |
-| ---------- | ----- | ---------------------------------- | ------ |
-| --help     |       | Show help                          |        |
-| --version  |       | Show version number                |        |
-| --script   | -s    | Your npm Cypress command           | string |
-| --args     | -a    | Your npm Cypress command arguments | string |
-| --threads  | -t    | Number of threads                  | number |
-| --specsDir | -d    | Cypress specs directory.           | string |
+| Option            | Alias | Description                        | Type   | Default             |
+| ----------------- | ----- | ---------------------------------- | ------ | ------------------- |
+| --help            |       | Show help                          |        |                     |
+| --version         |       | Show version number                |        |                     |
+| --script          | -s    | Your npm Cypress command           | string |                     |
+| --args            | -a    | Your npm Cypress command arguments | string |                     |
+| --specsDir        | -d    | Cypress specs directory.           | string | cypress/integration |
+| --writeWeightFile | -w    | if a weights file should be crated | bool   | false               |
+| --threads         | -t    | Number of threads; must be even #  | number | 4                   |
 
 # Contributors
-Looking for contributors.
+ *  Original Author: https://github.com/tnicola
+ *  Total Test Time: https://github.com/stepn1k
+ *  Updates and cleanup: https://github.com/sezane
+ *  Few small tweaks: me @ https://github.com/finalcut
 # License
  MIT

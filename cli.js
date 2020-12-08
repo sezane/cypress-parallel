@@ -28,8 +28,9 @@ const argv = yargs
     alias: 'a',
     type: 'string',
     description: 'Your npm Cypress command arguments'
-  }).option('write_weights_file', {
-      alias: 'wwf',
+  })
+  .option('writeWeightFile', {
+      alias: 'w',
       type: 'boolean',
       description: `Write ${WEIGHTS_JSON} file ? `
   }).argv;
@@ -40,9 +41,8 @@ if (!CY_SCRIPT) {
 }
 
 let N_THREADS = argv.threads ? argv.threads : 2;
-const DAFAULT_WEIGHT = 1;
 const SPEC_FILES_PATH = argv.specsDir ? argv.specsDir : 'cypress/integration';
-const WRITE_WEIGHTS_FILE = argv.write_weights_file ? argv.write_weights_file : false;
+const WRITE_WEIGHTS_FILE = argv.writeWeightFile ? argv.writeWeightFile : false;
 const CY_SCRIPT_ARGS = argv.args ? argv.args.split(' ') : [];
 
 const COLORS = [
@@ -75,18 +75,26 @@ const getRandomInt = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-const formatTime = function(timeMs) {
-  const seconds = Math.ceil(timeMs / 1000);
-  const sec = seconds % 60;
-  const min = Math.floor(seconds / 60);
-  let res = '';
+// function stolen from: https://stackoverflow.com/a/32180863/7329
+const formatTime = function(millisec) {
+  var seconds = (millisec / 1000).toFixed(1);
+  var minutes = (millisec / (1000 * 60)).toFixed(1);
+  var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+  var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
 
-  if (min) res += `${min}m `;
-  res += `${sec}s`;
-  return res;
+  if (seconds < 60) {
+      return seconds + " Sec";
+  } else if (minutes < 60) {
+      return minutes + " Min";
+  } else if (hours < 24) {
+      return hours + " Hrs";
+  } else {
+      return days + " Days"
+  }
 };
 
 const start = () => {
+  const startRunTime = new Date().getTime()
   const fileList = getAllFiles(SPEC_FILES_PATH);
   let specWeights = {};
   try {
@@ -94,6 +102,8 @@ const start = () => {
   } catch (err) {
     console.log(`Weight file not found in path: ${WEIGHTS_JSON}`);
   }
+
+  console.log(`Preparing to run ${fileList.length} spec files.  Please wait, the first result may take a bit of time to appear.`)
 
   let map = new Map();
   for (let f of fileList) {
@@ -156,14 +166,14 @@ const start = () => {
         try {
           const test = JSON.parse(data);
           if (test[0] === 'pass') {
-            const testDuration = test[1].duration;
-            suiteDuration += testDuration;
+            suiteDuration = test[1].duration;
             console.log(
-              `\x1b[32m✔ \x1b[0m${test[1].title} (${testDuration}ms)`
+              `\x1b[32m✔ \x1b[0m${test[1].title} (${suiteDuration}ms)`
             );
           }
           if (test[0] === 'fail') {
-            console.log(`\x1b[31m✖ \x1b[0m${test[1].title} ( - ms)`);
+            suiteDuration = test[1].duration;
+            console.log(`\x1b[31m✖ \x1b[0m${test[1].title} (${suiteDuration}ms)`);
             console.log(`\x1b[31m${test[1].err}`);
             console.log(`\x1b[31m${test[1].stack}`);
           }
@@ -187,6 +197,7 @@ const start = () => {
   });
 
   let timeMap = new Map();
+  let threadTimes = []
   Promise.all(children).then(resultMaps => {
     resultMaps.forEach((m, t) => {
       let totTimeThread = 0;
@@ -194,6 +205,7 @@ const start = () => {
         totTimeThread += test.duration;
       }
       console.log(`Thread ${t} time: ${formatTime(totTimeThread)}`);
+      threadTimes.push(totTimeThread)
 
       timeMap = new Map([...timeMap, ...m]);
     });
@@ -201,14 +213,21 @@ const start = () => {
     let table = new Table({
       head: ['Spec', 'Time', 'Tests', 'Passing', 'Failing', 'Pending'],
       style: { head: ['green'] },
-      colWidths: [25, 8, 7, 9, 9, 9]
+      colWidths: [45, 25, 7, 9, 9, 9]
     });
 
+    let totalTests = 0;
+    let totalPasses = 0;
     let totalDuration = 0;
+    let totalPending = 0;
+
     let totalWeight = timeMap.size * 10;
     let specWeights = {};
     for (let [name, test] of timeMap) {
       totalDuration += test.duration;
+      totalTests += test.tests;
+      totalPasses += test.passes;
+      totalPending += totalPending;
       specWeights[name] = { time: test.duration, weight: 0 };
       table.push([
         name,
@@ -220,22 +239,35 @@ const start = () => {
       ]);
     }
 
-    console.log(table.toString());
-
-    Object.keys(specWeights).forEach(spec => {
+    if (WRITE_WEIGHTS_FILE) {
+      Object.keys(specWeights).forEach(spec => {
       specWeights[spec].weight = Math.floor(
         (specWeights[spec].time / totalDuration) * totalWeight
       );
-    });
+      });
 
-    const weightsJson = JSON.stringify(specWeights);
+      const weightsJson = JSON.stringify(specWeights);
 
-    if (WRITE_WEIGHTS_FILE) {
       fs.writeFile(`${WEIGHTS_JSON}`, weightsJson, 'utf8', err => {
         if (err) throw err;
         console.log('Generated file parallel-weights.json.');
       });
     }
+
+    const endRunTime = new Date().getTime()
+    const totalRunTime = endRunTime - startRunTime
+
+
+    table.push([
+      'Total Run Time and Final Results',
+      `${formatTime(totalRunTime)}`,
+      totalTests,
+      totalPasses,
+      totalTests-totalPasses,
+      totalPending
+    ]);
+
+    console.log(table.toString());
   });
 };
 
