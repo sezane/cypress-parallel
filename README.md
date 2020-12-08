@@ -15,13 +15,13 @@ Reduce up to 40% your Cypress suite execution time parallelizing the test run on
 
 ## Install
  ```
- npm i cypress-parallel
+ npm i finalcut/cypress-parallel
  ```
 
  or
 
 ```
-yarn add cypress-parallel
+yarn add finalcut/cypress-parallel
  ```
 
 ## Add a new script
