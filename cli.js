@@ -40,7 +40,7 @@ if (!CY_SCRIPT) {
   throw new Error('Expected command, e.g.: cypress-parallel <cypress-script>');
 }
 
-let N_THREADS = argv.threads ? argv.threads : 4;
+let N_THREADS = argv.threads ? argv.threads : 2;
 const SPEC_FILES_PATH = argv.specsDir ? argv.specsDir : 'cypress/integration';
 const WRITE_WEIGHTS_FILE = argv.writeWeightFile ? argv.writeWeightFile : false;
 const CY_SCRIPT_ARGS = argv.args ? argv.args.split(' ') : [];
