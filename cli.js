@@ -94,6 +94,7 @@ const formatTime = function(millisec) {
 };
 
 const start = () => {
+  const startRunTime = new Date().getTime()
   const fileList = getAllFiles(SPEC_FILES_PATH);
   let specWeights = {};
   try {
@@ -101,6 +102,8 @@ const start = () => {
   } catch (err) {
     console.log(`Weight file not found in path: ${WEIGHTS_JSON}`);
   }
+
+  console.log(`Preparing to run ${fileList.length} spec files.  Please wait, the first result may take a bit of time to appear.`)
 
   let map = new Map();
   for (let f of fileList) {
@@ -194,6 +197,7 @@ const start = () => {
   });
 
   let timeMap = new Map();
+  let threadTimes = []
   Promise.all(children).then(resultMaps => {
     resultMaps.forEach((m, t) => {
       let totTimeThread = 0;
@@ -201,6 +205,7 @@ const start = () => {
         totTimeThread += test.duration;
       }
       console.log(`Thread ${t} time: ${formatTime(totTimeThread)}`);
+      threadTimes.push(totTimeThread)
 
       timeMap = new Map([...timeMap, ...m]);
     });
@@ -234,17 +239,6 @@ const start = () => {
       ]);
     }
 
-    table.push([
-      'Results',
-      `${formatTime(totalDuration)}`,
-      totalTests,
-      totalPasses,
-      totalTests-totalPasses,
-      totalPending
-    ]);
-
-    console.log(table.toString());
-
     if (WRITE_WEIGHTS_FILE) {
       Object.keys(specWeights).forEach(spec => {
       specWeights[spec].weight = Math.floor(
@@ -259,6 +253,21 @@ const start = () => {
         console.log('Generated file parallel-weights.json.');
       });
     }
+
+    const endRunTime = new Date().getTime()
+    const totalRunTime = endRunTime - startRunTime
+
+
+    table.push([
+      'Total Run Time and Final Results',
+      `${formatTime(totalRunTime)}`,
+      totalTests,
+      totalPasses,
+      totalTests-totalPasses,
+      totalPending
+    ]);
+
+    console.log(table.toString());
   });
 };
 
