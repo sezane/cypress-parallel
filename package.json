@@ -1,11 +1,11 @@
 {
   "name": "cypress-parallel",
-  "version": "0.1.8",
+  "version": "0.1.15",
   "description": "Reduce up to 40% your Cypress suite execution time parallelizing the test run on the same machine.",
   "main": "cli.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/finalcut/cypress-parallel.git"
+    "url": "git+https://github.com/sezane/cypress-parallel.git"
   },
   "keywords": [
     "cypress",
@@ -16,9 +16,9 @@
   "author": "Nicola Tommasi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/finalcut/cypress-parallel/issues"
+    "url": "https://github.com/sezane/cypress-parallel/issues"
   },
-  "homepage": "https://github.com/finalcut/cypress-parallel#readme",
+  "homepage": "https://github.com/sezane/cypress-parallel#readme",
   "bin": {
     "cypress-parallel": "./cli.js"
   },
