@@ -29,7 +29,7 @@ const argv = yargs
     type: 'string',
     description: 'Your npm Cypress command arguments'
   })
-  .option('weightFile', {
+  .option('writeWeightFile', {
       alias: 'w',
       type: 'boolean',
       description: `Write ${WEIGHTS_JSON} file ? `
@@ -42,7 +42,7 @@ if (!CY_SCRIPT) {
 
 let N_THREADS = argv.threads ? argv.threads : 4;
 const SPEC_FILES_PATH = argv.specsDir ? argv.specsDir : 'cypress/integration';
-const WRITE_WEIGHTS_FILE = argv.weightFile ? argv.weightFile : false;
+const WRITE_WEIGHTS_FILE = argv.writeWeightFile ? argv.writeWeightFile : false;
 const CY_SCRIPT_ARGS = argv.args ? argv.args.split(' ') : [];
 
 const COLORS = [

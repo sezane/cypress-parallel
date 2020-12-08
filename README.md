@@ -52,15 +52,15 @@ npm run cy:parallel
 
 ### Scripts options
 
-| Option       | Alias | Description                        | Type   | Default             |
-| ------------ | ----- | ---------------------------------- | ------ | ------------------- |
-| --help       |       | Show help                          |        |                     |
-| --version    |       | Show version number                |        |                     |
-| --script     | -s    | Your npm Cypress command           | string |                     |
-| --args       | -a    | Your npm Cypress command arguments | string |                     |
-| --specsDir   | -d    | Cypress specs directory.           | string | cypress/integration |
-| --weightFile | -w    | if a weights file should be crated | bool   | false               |
-| --threads    | -t    | Number of threads; must be even #  | number | 4                   |
+| Option            | Alias | Description                        | Type   | Default             |
+| ----------------- | ----- | ---------------------------------- | ------ | ------------------- |
+| --help            |       | Show help                          |        |                     |
+| --version         |       | Show version number                |        |                     |
+| --script          | -s    | Your npm Cypress command           | string |                     |
+| --args            | -a    | Your npm Cypress command arguments | string |                     |
+| --specsDir        | -d    | Cypress specs directory.           | string | cypress/integration |
+| --writeWeightFile | -w    | if a weights file should be crated | bool   | false               |
+| --threads         | -t    | Number of threads; must be even #  | number | 4                   |
 
 # Contributors
  *  Original Author: https://github.com/tnicola
